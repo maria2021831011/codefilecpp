@@ -58,7 +58,7 @@ int main() {
     for (int i = 1; i <= n; i++) {
         cin >> v[i];
     }
-    cin >> m;
+cin>>m;
 
     for (int i = 0; i < m; i++) {
         cin >> q[i].l >> q[i].r;

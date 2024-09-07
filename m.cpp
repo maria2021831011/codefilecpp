@@ -1,58 +1,31 @@
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
-#define int long long
-const int MAX_VAL = 1e5 + 9;
-int vec[35];
-int grundy[MAX_VAL];
 
-int Mex(bool vis[]) {
-    int mex = 0;
-    while (vis[mex])
-        mex++;
-    return mex;
-}
-int calculateGrundy(int p, int b) {
-    if (p == 0 || p < vec[0])
-        return 0;
-    if (grundy[p] != -1)
-        return grundy[p];
-
-    bool vis[35];
-    memset(vis, false, sizeof(vis));
-    for (int i = 0; i < b; i++) {
-        if (p >= vec[i])
-            vis[calculateGrundy(p - vec[i], b)] = true;
-    }
-    grundy[p] = Mex(vis);
-
-    return grundy[p];
-}
-
-int32_t main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
+int main() {
     int t;
-    cin >> t;
+    cin >> t;  // Read number of test cases
+
     while (t--) {
-        memset(grundy, -1, sizeof(grundy));
-        int a, b;
-        cin >> a >> b;
-        for (int i = 0; i < b; i++) {
-            cin >> vec[i];
+        int n;
+        cin >> n;  // Read the length of the sequence
+        vector<int> a(n);
+
+        for (int i = 0; i < n; ++i) {
+            cin >> a[i];  // Read the sequence
         }
-        sort(vec, vec + b);
-        int c = 0;
-        for (int i = 0; i < a; i++) {
-            int h;
-            cin >> h;
-            c ^= calculateGrundy(h, b);
+
+        int alternating_sum = 0;
+        for (int i = 0; i < n; ++i) {
+            if (i % 2 == 0) {
+                alternating_sum += a[i];  // Add if index is even
+            } else {
+                alternating_sum -= a[i];  // Subtract if index is odd
+            }
         }
-        if (!c)
-            cout << "Vinit" << '\n';
-        else
-            cout << "Ada" << '\n';
+
+        cout << alternating_sum << endl;  // Output the result for this test case
     }
+
     return 0;
 }
